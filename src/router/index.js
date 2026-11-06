@@ -48,6 +48,18 @@ const routes = [
         name: 'AssetManage',
         component: () => import('../views/asset/index.vue'),
         meta: { title: '资产管理', icon: 'TrendCharts' }
+      },
+      {
+        path: 'module-config',
+        name: 'ModuleConfig',
+        component: () => import('../views/module-config/index.vue'),
+        meta: { title: '模块配置', icon: 'Grid' }
+      },
+      {
+        path: 'wool',
+        name: 'WoolActivity',
+        component: () => import('../views/wool/index.vue'),
+        meta: { title: '羊毛设置', icon: 'Present' }
       }
     ]
   }

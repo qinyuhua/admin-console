@@ -43,6 +43,14 @@
             <el-icon><TrendCharts /></el-icon>
             <span>资产管理</span>
           </el-menu-item>
+          <el-menu-item index="/module-config">
+            <el-icon><Grid /></el-icon>
+            <span>模块配置</span>
+          </el-menu-item>
+          <el-menu-item index="/wool">
+            <el-icon><Present /></el-icon>
+            <span>羊毛设置</span>
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
