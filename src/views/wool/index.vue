@@ -459,7 +459,7 @@ async function handleDelete(row) {
   margin-bottom: 16px;
   padding: 14px 16px;
   background: #fff;
-  border: 1px solid #e7eeee;
+  border: 1px solid var(--line);
   border-radius: 12px;
 }
 
@@ -475,7 +475,7 @@ async function handleDelete(row) {
 .table-card {
   padding: 8px 16px 16px;
   background: #fff;
-  border: 1px solid #e7eeee;
+  border: 1px solid var(--line);
   border-radius: 12px;
 }
 
@@ -483,7 +483,7 @@ async function handleDelete(row) {
   width: 44px;
   height: 44px;
   border-radius: 8px;
-  border: 1px solid #eef4f4;
+  border: 1px solid var(--line);
 }
 
 .logo-fallback {
@@ -493,8 +493,8 @@ async function handleDelete(row) {
   width: 44px;
   height: 44px;
   border-radius: 8px;
-  background: #f1faf8;
-  color: #0eaa91;
+  background: var(--brand-soft);
+  color: var(--brand);
   font-size: 18px;
 }
 
@@ -502,12 +502,12 @@ async function handleDelete(row) {
   width: 44px;
   height: 44px;
   border-radius: 8px;
-  border: 1px solid #eef4f4;
+  border: 1px solid var(--line);
   flex: none;
 }
 
 .activity-link {
-  color: #0eaa91;
+  color: var(--brand);
   text-decoration: none;
   word-break: break-all;
 }

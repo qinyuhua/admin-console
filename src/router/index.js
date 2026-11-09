@@ -47,7 +47,13 @@ const routes = [
         path: 'asset',
         name: 'AssetManage',
         component: () => import('../views/asset/index.vue'),
-        meta: { title: '资产管理', icon: 'TrendCharts' }
+        meta: { title: '资产分组', icon: 'TrendCharts' }
+      },
+      {
+        path: 'asset-item',
+        name: 'AssetItemManage',
+        component: () => import('../views/asset/item.vue'),
+        meta: { title: '资产明细', icon: 'Document' }
       },
       {
         path: 'module-config',

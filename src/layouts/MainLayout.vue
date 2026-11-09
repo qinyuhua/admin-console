@@ -11,47 +11,29 @@
         class="app-menu"
         router
       >
-        <el-sub-menu index="system">
-          <template #title>
-            <el-icon><Setting /></el-icon>
-            <span>系统配置</span>
-          </template>
-          <el-menu-item index="/account">
-            <el-icon><User /></el-icon>
-            <span>账号配置</span>
+        <template v-for="group in menuTree" :key="group._id">
+          <el-sub-menu v-if="group.children && group.children.length" :index="String(group._id)">
+            <template #title>
+              <el-icon><component :is="resolveIcon(group.icon)" /></el-icon>
+              <span>{{ group.menuName }}</span>
+            </template>
+            <el-menu-item
+              v-for="child in group.children"
+              :key="child._id"
+              :index="child.path || `/${child._id}`"
+            >
+              <el-icon><component :is="resolveIcon(child.icon)" /></el-icon>
+              <span>{{ child.menuName }}</span>
+            </el-menu-item>
+          </el-sub-menu>
+          <el-menu-item
+            v-else
+            :index="group.path || `/${group._id}`"
+          >
+            <el-icon><component :is="resolveIcon(group.icon)" /></el-icon>
+            <span>{{ group.menuName }}</span>
           </el-menu-item>
-          <el-menu-item index="/menu">
-            <el-icon><Menu /></el-icon>
-            <span>菜单配置</span>
-          </el-menu-item>
-          <el-menu-item index="/role">
-            <el-icon><UserFilled /></el-icon>
-            <span>角色配置</span>
-          </el-menu-item>
-          <el-menu-item index="/miniapp-user">
-            <el-icon><Iphone /></el-icon>
-            <span>小程序用户</span>
-          </el-menu-item>
-        </el-sub-menu>
-        
-        <el-sub-menu index="modules">
-          <template #title>
-            <el-icon><Grid /></el-icon>
-            <span>功能模块</span>
-          </template>
-          <el-menu-item index="/asset">
-            <el-icon><TrendCharts /></el-icon>
-            <span>资产管理</span>
-          </el-menu-item>
-          <el-menu-item index="/module-config">
-            <el-icon><Grid /></el-icon>
-            <span>模块配置</span>
-          </el-menu-item>
-          <el-menu-item index="/wool">
-            <el-icon><Present /></el-icon>
-            <span>羊毛设置</span>
-          </el-menu-item>
-        </el-sub-menu>
+        </template>
       </el-menu>
     </el-aside>
 
@@ -91,10 +73,12 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { ElMessageBox } from 'element-plus'
+import * as ElementPlusIcons from '@element-plus/icons-vue'
+import request from '../api'
 
 const route = useRoute()
 const router = useRouter()
@@ -103,6 +87,26 @@ const auth = useAuthStore()
 const activeMenu = computed(() => route.path)
 const currentPageTitle = computed(() => route.meta.title || '')
 const displayName = computed(() => auth.userInfo?.name || auth.userInfo?.username || auth.userInfo?.account || '用户')
+
+const menuTree = ref([])
+
+function resolveIcon(name) {
+  if (!name) return ElementPlusIcons.Menu
+  return ElementPlusIcons[name] || ElementPlusIcons.Menu
+}
+
+async function fetchMenuTree() {
+  try {
+    const res = await request.post('/menu/list')
+    if (res.data) menuTree.value = res.data
+  } catch (e) {
+    // 菜单加载失败不阻塞主流程
+  }
+}
+
+onMounted(() => {
+  fetchMenuTree()
+})
 
 function handleCommand(command) {
   if (command === 'logout') {
@@ -130,7 +134,7 @@ function handleCommand(command) {
   flex-direction: column;
   overflow: hidden;
   background: #ffffff;
-  border-right: 1px solid #e7eeee;
+  border-right: 1px solid var(--line);
 }
 
 .brand-mark {
@@ -139,7 +143,7 @@ function handleCommand(command) {
   gap: 10px;
   height: 68px;
   padding: 0 18px;
-  border-bottom: 1px solid #edf2f2;
+  border-bottom: 1px solid var(--line);
 }
 
 .brand-symbol {
@@ -150,7 +154,7 @@ function handleCommand(command) {
   height: 28px;
   padding: 4px;
   border-radius: 8px;
-  background: #16c5a7;
+  background: var(--brand);
 }
 
 .brand-symbol span {
@@ -197,25 +201,25 @@ function handleCommand(command) {
 }
 
 .app-menu :deep(.el-sub-menu__title:hover) {
-  background: #f1faf8;
-  color: #0eaa91;
+  background: var(--brand-soft-hover);
+  color: var(--brand);
 }
 
 .app-menu :deep(.el-sub-menu.is-opened .el-sub-menu__title) {
-  background: #f1faf8;
-  color: #0eaa91;
+  background: var(--brand-soft-hover);
+  color: var(--brand);
 }
 
 .app-menu :deep(.el-menu-item .el-icon) { color: #718096; }
 .app-menu :deep(.el-sub-menu__title .el-icon) { color: #718096; }
-.app-menu :deep(.el-menu-item:hover) { background: #f1faf8; color: #0eaa91; }
+.app-menu :deep(.el-menu-item:hover) { background: var(--brand-soft-hover); color: var(--brand); }
 .app-menu :deep(.el-menu-item.is-active) {
-  background: #edfaf7;
-  color: #0eaa91;
+  background: var(--brand-soft);
+  color: var(--brand);
   font-weight: 600;
 }
-.app-menu :deep(.el-menu-item.is-active .el-icon) { color: #0eaa91; }
-.app-menu :deep(.el-sub-menu.is-opened .el-sub-menu__title .el-icon) { color: #0eaa91; }
+.app-menu :deep(.el-menu-item.is-active .el-icon) { color: var(--brand); }
+.app-menu :deep(.el-sub-menu.is-opened .el-sub-menu__title .el-icon) { color: var(--brand); }
 
 .content-shell { min-width: 0; }
 
@@ -226,7 +230,7 @@ function handleCommand(command) {
   height: 68px;
   padding: 0 24px;
   background: #fff;
-  border-bottom: 1px solid #e8eeee;
+  border-bottom: 1px solid var(--line);
 }
 
 .breadcrumb-title { color: #172033; font-size: 16px; font-weight: 700; }
@@ -236,7 +240,7 @@ function handleCommand(command) {
 .language { color: #64748b; font-size: 12px; }
 .language-chevron { margin-left: 3px; color: #9aa5b5; }
 .profile-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.profile-avatar { background: #16b99d; color: white; font-size: 13px; font-weight: 700; }
+.profile-avatar { background: var(--brand); color: white; font-size: 13px; font-weight: 700; }
 .profile-copy { display: flex; flex-direction: column; gap: 1px; }
 .profile-copy strong { color: #273244; font-size: 12px; font-weight: 600; }
 .profile-copy small { color: #a2acb9; font-size: 10px; }
@@ -244,10 +248,10 @@ function handleCommand(command) {
 .main-content {
   min-height: calc(100vh - 68px);
   padding: 24px;
-  background: linear-gradient(135deg, #edf9f8 0%, #f8fbfb 46%, #f5f8fa 100%);
+  background: linear-gradient(135deg, #FFF8EA 0%, #FFFBF1 46%, #FFFDF6 100%);
 }
 
-:deep(.el-divider--vertical) { height: 20px; margin: 0; border-color: #e7eeee; }
+:deep(.el-divider--vertical) { height: 20px; margin: 0; border-color: var(--line); }
 
 @media (max-width: 760px) {
   .app-sidebar { width: 70px !important; }

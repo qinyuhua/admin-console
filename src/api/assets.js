@@ -42,3 +42,17 @@ export const getAssetStats = () => {
     method: 'get'
   })
 }
+
+/** 管理端：新增资产分组 */
+export const addAsset = (data) => request({ url: '/asset/admin/add', method: 'post', data })
+/** 管理端：更新资产分组 */
+export const updateAsset = (data) => request({ url: '/asset/admin/update', method: 'post', data })
+/** 管理端：删除资产分组（软删+级联明细） */
+export const deleteAsset = (_id) => request({ url: '/asset/admin/delete', method: 'post', data: { _id } })
+
+/** 管理端：新增资产明细 */
+export const addAssetItem = (data) => request({ url: '/asset/admin/item/add', method: 'post', data })
+/** 管理端：更新资产明细 */
+export const updateAssetItem = (data) => request({ url: '/asset/admin/item/update', method: 'post', data })
+/** 管理端：删除资产明细 */
+export const deleteAssetItem = (_id) => request({ url: '/asset/admin/item/delete', method: 'post', data: { _id } })

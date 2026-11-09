@@ -25,11 +25,11 @@
         </div>
 
         <!-- 图标区 -->
-        <div class="card-icon-wrap" :style="{ background: item.iconBg || '#edfaf7' }">
-          <el-icon v-if="item.icon" class="card-icon" :style="{ color: item.iconColor || '#0eaa91' }">
+        <div class="card-icon-wrap" :style="{ background: item.iconBg || 'var(--brand-soft)' }">
+          <el-icon v-if="item.icon" class="card-icon" :style="{ color: item.iconColor || 'var(--brand)' }">
             <component :is="item.icon" />
           </el-icon>
-          <el-icon v-else class="card-icon" style="color:#0eaa91"><Grid /></el-icon>
+          <el-icon v-else class="card-icon" style="color:var(--brand)"><Grid /></el-icon>
         </div>
 
         <!-- 内容 -->
@@ -182,8 +182,8 @@ const defaultForm = () => ({
   subtitle: '',
   description: '',
   icon: '',
-  iconBg: '#edfaf7',
-  iconColor: '#0eaa91',
+  iconBg: 'var(--brand-soft)',
+  iconColor: 'var(--brand)',
   path: '',
   order: 0,
   enabled: true
@@ -203,8 +203,8 @@ function openDialog(row) {
         subtitle: row.subtitle || '',
         description: row.description || '',
         icon: row.icon || '',
-        iconBg: row.iconBg || '#edfaf7',
-        iconColor: row.iconColor || '#0eaa91',
+        iconBg: row.iconBg || 'var(--brand-soft)',
+        iconColor: row.iconColor || 'var(--brand)',
         path: row.path || '',
         order: row.order ?? 0,
         enabled: row.enabled !== false
@@ -293,14 +293,14 @@ async function handleDelete(row) {
   gap: 12px;
   padding: 20px;
   background: #fff;
-  border: 1px solid #e7eeee;
+  border: 1px solid var(--line);
   border-radius: 12px;
   transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .module-card:hover {
-  border-color: #a8e6dd;
-  box-shadow: 0 4px 18px rgba(22, 197, 167, 0.1);
+  border-color: var(--brand);
+  box-shadow: 0 4px 18px rgba(180, 83, 9, 0.12);
 }
 
 .module-card.disabled {
@@ -321,8 +321,8 @@ async function handleDelete(row) {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #f1faf8;
-  color: #0eaa91;
+  background: var(--brand-soft);
+  color: var(--brand);
   font-size: 11px;
   font-weight: 700;
 }

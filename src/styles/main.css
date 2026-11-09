@@ -5,13 +5,26 @@
 }
 
 :root {
-  --brand: #16b99d;
-  --brand-soft: #edfaf7;
+  /* Element Plus 主色覆盖：金黄色 */
+  --el-color-primary: #E8A922;
+  --el-color-primary-light-3: #EAB43B;
+  --el-color-primary-light-5: #ECC361;
+  --el-color-primary-light-7: #F0D389;
+  --el-color-primary-light-8: #F2DC9E;
+  --el-color-primary-light-9: #FDF5E1;
+  --el-color-primary-dark-2: #C98F18;
+
+  /* 业务主题变量 */
+  --brand: #E8A922;
+  --brand-hover: #C98F18;
+  --brand-soft: #FDF5E1;
+  --brand-soft-hover: #FEF7E5;
+
   --ink: #172033;
   --muted: #7f8b9f;
-  --line: #e5eeee;
+  --line: #e8ebf0;
   --surface: #ffffff;
-  --page: #f4f8f8;
+  --page: #fffaf0;
 }
 
 html, body, #app {
@@ -64,14 +77,21 @@ button, input, textarea, select { font-family: inherit; }
 .el-button--primary {
   --el-button-bg-color: var(--brand);
   --el-button-border-color: var(--brand);
-  --el-button-hover-bg-color: #0faa92;
-  --el-button-hover-border-color: #0faa92;
+  --el-button-hover-bg-color: var(--brand-hover);
+  --el-button-hover-border-color: var(--brand-hover);
+  --el-button-active-bg-color: var(--brand-hover);
+  --el-button-active-border-color: var(--brand-hover);
   border-radius: 8px;
 }
 
 .el-input__wrapper, .el-select__wrapper {
   border-radius: 8px;
-  box-shadow: 0 0 0 1px #e1e9eb inset;
+  box-shadow: 0 0 0 1px var(--line) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--brand) inset !important;
 }
 
 .el-card, .el-table, .el-dialog {
@@ -80,8 +100,8 @@ button, input, textarea, select { font-family: inherit; }
 }
 
 .el-table {
-  --el-table-header-bg-color: #f8fbfb;
-  --el-table-row-hover-bg-color: #f4fbfa;
+  --el-table-header-bg-color: #FDF9EE;
+  --el-table-row-hover-bg-color: #FEF7E5;
   overflow: hidden;
 }
 
@@ -95,9 +115,22 @@ button, input, textarea, select { font-family: inherit; }
   --el-pagination-hover-color: var(--brand);
 }
 
-.el-tag--success {
-  --el-tag-bg-color: #edfaf7;
-  --el-tag-border-color: #c8eee5;
-  --el-tag-text-color: #0eaa91;
+.el-pagination .el-pager li.is-active {
+  background-color: var(--brand);
+  color: #fff;
 }
 
+.el-tag--success {
+  --el-tag-bg-color: var(--brand-soft);
+  --el-tag-border-color: #F5E6B8;
+  --el-tag-text-color: var(--brand);
+}
+
+/* 链接、输入框聚焦文字色 */
+a { color: var(--brand); }
+a:hover { color: var(--brand-hover); }
+
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+  color: var(--ink);
+}
